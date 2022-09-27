@@ -146,22 +146,24 @@ function buyFactory() {
 </script>
 
 <html lang="en">
-  <!html portion of the code!>
+  <!-- html portion of the code -->
   <title>Hotdog Clicker</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <body>
     <h1><font color="red">Hotdog Clicker</font></h1>
     <head>
+      <label for="file">Select a save file: </label>
+      <input type="file" name="file" id="file" accept=".hotdog"> <!-- TODO: Rename to "Upload Save file"-->
+      <button onclick="load()" name="submit">Load Save</button>
+      <br><br>
+      
       <title>0 hotdogs</title>
       <input type="text" id="amount" disabled style="text-align: center;" />
       <input type="text" id="hps" disabled style="text-align: center;" />
       <input type="text" id="hpc" disabled style="text-align: center;" />
       <button><div style="text-align:center"></div><a href="#" onClick="save()" id="saveButton" download="hotdogSave.hotdog">Save</a></button>
       
-	  <br><br>
-      <input type="file" name="file" id="file"> <!-- TODO: Rename to "Upload Save file"-->
-      <button onclick="load()" name="submit">Load Save</button>
      
      
       <nav class = "nav">
@@ -196,14 +198,41 @@ function buyFactory() {
     <script>
       //js section for saving and loading functions
 
+function encode(param) {
+		// This function is for seeding an int
+    // This uses a sudo-random, really bad, encryption algorithm that i just randomly made up
+    
+    return Math.round(Math.cos(param) * 10000);
+}
+
+function generateKey() {
+		// This is really easy to just "hack" but eh.
+    var generatedKey = encode(encode(hotdogs) + encode(hps) + encode(vendors) + encode(factory) + encode(hpc) + encode(hotdogStore) + encode(carnival) + encode(plant));
+		return generatedKey;
+}
+
+function validateKey(key) {
+		// Use this function after loading the save file
+    var trueKey = generateKey();
+    
+    // If the key is legit, return true
+    if(key == trueKey) {
+    		return true;
+    } else {
+    		return false;
+    }
+}
+
       //function for save
 function save() {
     // saveFile variable stores the data for the game variables
 	  // TODO: Add encryption to the game save to prevent dubious hotdog cheating
 
     var saveFile = "";
+    var key      = generateKey();
 		
     saveFile += "{"            + "\n";
+    saveFile += '"validator": '+ key         + ",\n"
     saveFile += '"hotdogs": '  + hotdogs     + ",\n";
     saveFile += '"hps": '      + hps         + ",\n";
     saveFile += '"vendors": '  + vendors     + ",\n";
@@ -216,7 +245,7 @@ function save() {
     
     // Even though the file format pretty much follows the same conventions as a json file, the extenstion hotdog is too funny
     saveButton.href="data:text/plain," + encodeURIComponent(saveFile);
-		saveButton.click();
+		//saveButton.click();
 }
       // function for load
       function load() {
@@ -236,11 +265,27 @@ function save() {
           hotdogStore  = jsonHotdog.stores;
           carnival     = jsonHotdog.carnival;
           plant        = jsonHotdog.plant;
+          
+          // Validate if the save file is legit
+          if(validateKey(jsonHotdog.validator) == false) {
+         			alert("YOU HAVE CHEATED IN THIS GAME, CHEATING WILL NOT BE REWARDED!!");
+              
+              // Make the cheater lose their hotdogs
+              hotdogs = -1;
+              hpc = -100000;
+              hps = -100000;
+              vendors = 0;
+              hotdogStore = 0;
+              factory = 0;
+              carnival = 0;
+              plant = 0;
+          }
 				}, false);
         
         fileReader.readAsText(fileToLoad);
         
         update();
+		alert("File has loaded!");
       }
     </script>
 
