@@ -117,7 +117,7 @@ function buyFactory() {
     Math.round(hpc);
     Math.round(hotdogs);
     hpc = ((hps*0.1)+1);
-    save();
+    // Disabled: save();
     update();
   }
 
@@ -157,8 +157,11 @@ function buyFactory() {
       <input type="text" id="amount" disabled style="text-align: center;" />
       <input type="text" id="hps" disabled style="text-align: center;" />
       <input type="text" id="hpc" disabled style="text-align: center;" />
-      <button><div style="text-align:center"><a href="#" onClick="save()">Save</a></button>
-      <button><a href="#" onClick="load()">Load</a></button>
+      <button><div style="text-align:center"></div><a href="#" onClick="save()" id="saveButton" download="hotdogSave.hotdog">Save</a></button>
+      
+	  <br><br>
+      <input type="file" name="file" id="file"> <!-- TODO: Rename to "Upload Save file"-->
+      <button onclick="load()" name="submit">Load Save</button>
      
      
       <nav class = "nav">
@@ -190,95 +193,108 @@ function buyFactory() {
       };
     </script>
     
-
     <script>
       //js section for saving and loading functions
 
       //function for save
-      function save() {
-        localStorage.setItem("hotdogs", hotdogs);
-        localStorage.setItem("hps", hps);
-        localStorage.setItem("vendors", vendors);
-        localStorage.setItem("factory", factory);
-        localStorage.setItem("hpc", hpc);
-        localStorage.setItem("stores", hotdogStore);
-        localStorage.setItem("carnival", carnival);
-        localStorage.setItem("plant", plant);
-        Math.round(hpc);
-        Math.round(hotdogs);
-      }
+function save() {
+    // saveFile variable stores the data for the game variables
+	  // TODO: Add encryption to the game save to prevent dubious hotdog cheating
 
+    var saveFile = "";
+		
+    saveFile += "{"            + "\n";
+    saveFile += '"hotdogs": '  + hotdogs     + ",\n";
+    saveFile += '"hps": '      + hps         + ",\n";
+    saveFile += '"vendors": '  + vendors     + ",\n";
+    saveFile += '"factory": '  + factory     + ",\n";
+    saveFile += '"hpc": '      + hpc         + ",\n";
+    saveFile += '"stores": '   + hotdogStore + ",\n";
+    saveFile += '"carnival": ' + carnival    + ",\n";
+    saveFile += '"plant": '    + plant       + "\n";
+    saveFile += "}";
+    
+    // Even though the file format pretty much follows the same conventions as a json file, the extenstion hotdog is too funny
+    saveButton.href="data:text/plain," + encodeURIComponent(saveFile);
+		saveButton.click();
+}
       // function for load
       function load() {
-        hotdogs = localStorage.getItem("hotdogs");
-        hotdogs = parseInt(hotdogs);
-        vendors = localStorage.getItem("vendors");
-        vendors = parseInt(vendors);
-        factory = localStorage.getItem("factory");
-        factory = parseInt(factory);
-        hps = localStorage.getItem("hps");
-        hps = parseInt(hps);
-        hpc = localStorage.getItem("hpc");
-        hpc = parseInt(hpc);
-        carnival = localStorage.getItem("carnival");
-        carnival = parseInt(carnival);
-        plant = localStorage.getItem("plant");
-        plant = parseInt(plant);
+      	var fileToLoad = document.getElementById("file").files[0];
+        const fileReader = new FileReader();
+        fileReader.addEventListener("load", function () {
+          var fileText = fileReader.result;
+          
+          // Load the .hotdog file by parsing the json
+          var jsonHotdog = JSON.parse(fileReader.result)
+          
+          hotdogs      = jsonHotdog.hotdogs;
+          hps          = jsonHotdog.hps;
+          vendors      = jsonHotdog.vendors;
+          factory      = jsonHotdog.factory;
+          hpc          = jsonHotdog.hpc;
+          hotdogStore  = jsonHotdog.stores;
+          carnival     = jsonHotdog.carnival;
+          plant        = jsonHotdog.plant;
+				}, false);
+        
+        fileReader.readAsText(fileToLoad);
+        
         update();
       }
     </script>
 
-    <!another html section, buttons for upgrades!>
+    <!-- another html section, buttons for upgrades -->
 
-    <p><font color = "red"> Hotdog Making Stuff </p></font>
+    <p><font color = "red"> Hotdog Making Stuff</font></p>
 
-    <!vendor!>
+    <!-- vendor -->
     <button><a onClick="buyVendor()">
     <img src = "https://thumbs.dreamstime.com/b/new-york-street-vendor-hot-dog-vendors-streets-city-55794767.jpg"
-    alt = "vendor not found" width = "190px" height = "100px">
+    alt = "vendor not found" width = "190px" height = "100px"></a>
     </button>
-    <p> Buy One Hotdog Street Vendor<p>
-    <p id="costVendor"> Hotdogs</p></a>
+    <p> Buy One Hotdog Street Vendor</p>
+    <p id="costVendor"> Hotdogs</p>
     <p id="amountVendor">You own 0 vendors.</p>
    
 
-    <!store!>
+    <!-- store -->
     <button><a onClick="buyStore()">
     <img src = "https://upload.wikimedia.org/wikipedia/commons/9/98/Pinks_Hot_Dogs.jpg"
-    alt = "store not found" width = "190px" height = "100px">
+    alt = "store not found" width = "190px" height = "100px"></a>
     </button>
     <p> Buy One Hotdog Store </p>
-    <p id="costStore"> Hotdogs</p></a>
+    <p id="costStore"> Hotdogs</p>
     <p id="amountStore">You own 0 stores.</p>
 
 
-    <!factory!>
+    <!--factory -->
     <button><a onClick="buyFactory()">
     <img src = "https://i.ytimg.com/vi/BMgkh6at17A/maxresdefault.jpg"
-    alt = "factory not found" width = "190px" height = "100px">
+    alt = "factory not found" width = "190px" height = "100px"></a>
     </button>
     <p> Buy One Hotdog Factory</p>
-    <p id="costFactory"> Factory</p></a>
+    <p id="costFactory"> Factory</p>
     <p id="amountFactory"> You own 0 factories.</p>
 
 
-    <!carnival!>
+    <!-- carnival -->
     <button><a onClick="buyCarnival()">
       <img src = "https://images.fineartamerica.com/images-medium-large-5/carnival-hot-dog-on-a-stick-jason-o-watson.jpg"
-      alt = "carnival not found" width = "190px" height = "100px">
+      alt = "carnival not found" width = "190px" height = "100px"></a>
     </button>
     <p> Buy One Hotdog Carnival</p>
-    <p id="costCarnival"> Carnival</p></a>
+    <p id="costCarnival"> Carnival</p>
     <p id="amountCarnival"> You own 0 Carnivals.</p>
 
 
-    <!plant!>
+    <!-- plant -->
     <button><a onClick="buyPlant()">
       <img src = "https://cdn.mos.cms.futurecdn.net/quot7kNm69aWtc7RqkU5xE-1200-80.jpg"
-      alt = "plant not found" width = "190px" height = "100px">
+      alt = "plant not found" width = "190px" height = "100px"></a>
     </button>
     <p> Buy One Hotdog Nuclear Power Plant</p>
-    <p id="costPlant"> Hotdog Nuclear Power Plant</p></a>
+    <p id="costPlant"> Hotdog Nuclear Power Plant</p>
     <p id="amountPlant"> You own 0 Hotdog Nuclear Plants.</p>
 
 
