@@ -43,7 +43,34 @@ const dev = {
 	
 </script>
 
+<script>
+  function toDisplay(number) {
+		if(number < 1000000) {
+    		return number;
+    } else if(number   < 1000000000) {
+    		return Math.round(number / 10000) / 100 + " M";
+    } else if(number   < 1000000000000) {
+    		return Math.round(number / 10000000) / 100 + " B";
+    } else if(number   < 1000000000000000) {
+    		return Math.round(number / 10000000000) / 100 + " T";
+    } else if(number   < 1000000000000000000) {
+    		return Math.round(number / 10000000000000) / 100 + " Quad";
+    } else if(number   < 1000000000000000000000) {
+    		return Math.round(number / 10000000000000000) / 100 + " Quin";
+    } else if(number   < 1000000000000000000000000) {
+    		return Math.round(number / 10000000000000000000) / 100 + " Non";
+    } else if(number   < 1000000000000000000000000000) {
+    		return Math.round(number / 10000000000000000000000) / 100 + " Deci";
+    } else if(number   < 1000000000000000000000000000000) {
+    		return Math.round(number / 10000000000000000000000000) / 100 + " Unda";
+    } else if(number   < 1000000000000000000000000000000000) {
+    		return Math.round(number / 10000000000000000000000000000) / 100 + " That's alot of hotdogs";
+    }
+	}
+</script>
+
 <script>//js section for buying sales things
+
 function buyVendor(){
   if (hotdogs >= ((vendors+1) * 12)){
     hotdogs = hotdogs - ((vendors+1) * 12);
@@ -120,14 +147,14 @@ function buyFactory() {
     // Disabled: save();
     update();
   }
-
+  
   //update the stuff
   function update() {
     Math.round(hpc);
     Math.round(hotdogs);
-    document.getElementById("amount").value = Math.round(hotdogs) + " hotdogs";
-    document.getElementById("hps").value = Math.round(hps) + " Hotdogs per second";
-    document.getElementById("hpc").value = Math.round(hpc) + " hotdogs per click";
+    document.getElementById("amount").value = toDisplay(Math.round(hotdogs)) + " hotdogs";
+    document.getElementById("hps").value = toDisplay(Math.round(hps)) + " Hotdogs per second";
+    document.getElementById("hpc").value = toDisplay(Math.round(hpc)) + " hotdogs per click";
     document.title = Math.round(hotdogs) + " hotdogs";
     document.getElementById('amountVendor').innerHTML = "You own " + vendors + " hotdog street vendors.";
     document.getElementById('costVendor').innerHTML = "Costs " + ((vendors+1) * 12) + " Hotdogs.";
