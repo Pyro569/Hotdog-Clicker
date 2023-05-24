@@ -1,0 +1,147 @@
+#amount {
+  position: fixed;
+  top: 0;
+  font-family: sans-serif;
+  margin-top: 0;
+  text-align: center;
+  width: 150px;
+  left: 1350px;
+}
+#hps {
+  position: fixed;
+  top: 0;
+  font-family: sans-serif;
+  margin-top: 0;
+  text-align: center;
+  width: 150px;
+  left: 1520px;
+}
+#hpc {
+  position: fixed;
+  top: 0;
+  font-family: sans-serif;
+  margin-top: 0;
+  text-align: center;
+  width: 150px;
+  left: 1690px;
+}
+
+.buyGrid {
+  position: absolute;
+  top: 1700px;
+  display: grid;
+  grid-template-rows: 240px 240px 240px;
+  grid-template-columns: 500px 500px 500px 500px;
+}
+
+#upgrades {
+  position: absolute;
+  top: 2450px;
+}
+
+.upgradeGrid {
+  position: absolute;
+  top: 2500px;
+  display: grid;
+  grid-template-rows: 250px 250px;
+  grid-template-columns: 250px 250px 250px 250px 250px 250px;
+}
+
+#ascensionTitle {
+  position: absolute;
+  top: 3200px;
+}
+
+#ascensionUpgradeBuy {
+  position: absolute;
+  top: 3250px;
+}
+
+#ascensionUpgrade {
+  position: absolute;
+  top: 3300px;
+}
+
+#ascensionAmount {
+  position: absolute;
+  top: 3290px;
+  left: 220px;
+}
+
+#costUpgradeAscension {
+  position: absolute;
+  top: 3330px;
+  left: 220px;
+}
+
+#costNextAscension {
+  position: absolute;
+  top: 3370px;
+  left: 220px;
+}
+
+#stats {
+  position: absolute;
+  top: 3400px;
+}
+
+#hotdogsEverMade {
+  position: absolute;
+  top: 3450px;
+}
+
+#hotdogsMadeAscension {
+  position: absolute;
+  top: 3480px;
+}
+
+#hotdogsEverSpent {
+  position: absolute;
+  top: 3510px;
+}
+
+#hotdogsSpentAscension {
+  position: absolute;
+  top: 3540px;
+}
+
+#civMiniGame {
+  position: absolute;
+  top: 3590px;
+}
+
+.miniCivGame {
+  position: absolute;
+  top: 3640px;
+  display: table;
+  grid-template-columns: 250px 250px 250px 250px;
+  grid-template-rows: 50px 50px 50px;
+}
+
+#sellResources {
+  position: absolute;
+  top: 3660px;
+  left: 300px;
+}
+
+#buildMine {
+  position: absolute;
+  top: 3660px;
+  left: 410px;
+}
+
+#payDebt {
+  position: absolute;
+  top: 3660px;
+  left: 490px;
+}
+
+.buyMoney {
+  position: absolute;
+  top: 3660px;
+  left: 600px;
+  display: grid;
+  grid-template-columns: 200px 200px 200px 200px;
+  grid-template-rows: 100px 100px 100px 100px;
+}
+
